@@ -1,0 +1,247 @@
+<header id="header">
+
+     <!-- Logo -->
+    <%unless user_signed_in?%>
+    <a href="/" class="logo">
+        <img src="<%= asset_path 'logo.png'%>" alt="">
+    </a>
+    <%else%>
+    <a href="/" class="owner">
+        <img width="80" height="80" src="<%= current_user.image%>" alt="" class="image">
+        <div class="content">
+            <h2 class="name"><%= current_user.name%></h2>
+            <h2 class="caption text-muted"><%= current_user.email%></h2>
+        </div>
+    </a>
+    <%end%>
+
+    <!-- Navigation -->
+     <nav id="main-menu">
+        <div class="nav-wrapper">
+            <ul class="nav nav-primary">
+                <li><a href="/"><i class="li-home"></i>Start</a></li>
+                <li><a href="/home/introduce"><i class="li-feedback"></i>About</a></li>
+                <li><a href="/home/services"  class="active"><i class="li-laptop"></i>Services</a></li>
+                <li><a href="/clubs"><i class="li-imac"></i>독서모임</a></li>
+                <li><a href="/cbooks"><i class="li-pen"></i>선정도서</a></li>
+                <li><a href="/clubs/apply"><i class="li-email"></i>등록신청</a></li>
+                <li class="has-children">
+                    <a href="#"><i class="li-heart"></i>Mypage</a>
+                    <ul>
+                        <li><a href="#" class="go-back"><i class="ti-angle-left"></i>뒤로가기</a></li>
+                        <li class="has-children">
+                            <a href="/">내 서재</a>
+                            <ul>
+                                <li><a href="#" class="go-back"><i class="ti-angle-left"></i>뒤로가기</a></li>
+                                <li><a href="index-one-page.html">읽은 책</a></li>
+                                <li><a href="index-one-page-dark.html">읽는 책</a></li>
+                                <li><a href="index-one-page-agency.html">읽을 책<span class="tag tag-info">New!</span></a></li>
+                                
+                            </ul>
+                        </li>
+                        <li class="has-children">
+                            <a href="/">내 독서모임</a>
+                            <ul>
+                                <li><a href="#" class="go-back"><i class="ti-angle-left"></i>뒤로가기</a></li>
+                                <li><a href="index-one-page.html">최근 팔로우</a></li>
+                                <li><a href="index-one-page-dark.html">최근 댓글</a></li>
+                                
+                                
+                            </ul>
+                        </li>
+                        <li class="has-children">
+                            <a href="#">팔로잉한 독서모임</a>
+                            <ul>
+                                <li><a href="#" class="go-back"><i class="ti-angle-left"></i>Extra</a></li>
+                                <li><a href="blog.html">Blog</a></li>
+                                <li><a href="blog-sidebar-left.html">Blog Sidebar Left</a></li>
+                                <li><a href="blog-sidebar-right.html">Blog Sidebar Right</a></li>
+                                <li><a href="blog-post.html">Blog Post</a></li>
+                                <li><a href="blog-post-sidebar-left.html">Blog Post Sidebar Left</a></li>
+                                <li><a href="blog-post-sidebar-right.html">Blog Post Sidebar Right</a></li>
+                            </ul>
+                        </li>
+                        <li class="has-children">
+                            <a href="#">내가 남긴 기록들</a>
+                            <ul>
+                                <li><a href="#" class="go-back"><i class="ti-angle-left"></i>Extra</a></li>
+                                <li><a href="portfolio-2-cols.html">Portfolio 2 Columns</a></li>
+                                <li><a href="portfolio-3-cols.html">Portfolio 3 Columns</a></li>
+                                <li><a href="portfolio-project-1.html">Single Project #1</a></li>
+                                <li><a href="portfolio-project-2.html">Single Project #2</a></li>
+                            </ul>
+                        </li>
+                        <li class="has-children">
+                            <a href="#">친구 목록</a>
+                            <ul>
+                                <li><a href="#" class="go-back"><i class="ti-angle-left"></i>Extra</a></li>
+                                <li><a href="footer-light.html">Footer Light</a></li>
+                                <li><a href="footer-dark.html">Footer Dark</a></li>
+                                <li><a href="footer-widgetized.html">Footer Widgetized</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#">정보수정</a></li>
+                        
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <span class="selector"></span>
+    </nav>
+
+</header>
+
+<div id="content">
+
+    <!-- Page Title -->
+    <div class="page-title bg-dark dark text-xs-center">
+        <div class="bg-image"><img src="<%= asset_path 'img/photos/coaching_bg01.jpg'%>" alt=""></div>
+        <div class="container-fluid container-custom">
+            <h1>리딩크루 서비스</h1>
+            <p class="lead text-muted"></p>
+        </div>
+    </div>
+    
+    <!-- Section / Services -->
+    <section id="services" class="section text-xs-center">
+            
+            <div class="container-fluid container-custom">
+                
+            <div class="row">
+                
+                
+                <div class="col-md-6">
+                    <div class="box left">
+                        <h3>개인사용자</h3>
+                            <div class="col-6">
+                    <div class="feature feature-1 animated" data-animation="fadeIn">
+                        <span class="icon icon-primary icon-lg"><i class="li-setting3"></i></span>
+                        <h4 class="mb-0">독서모임정보</h4>
+                        <span class="text-muted">내 주변의 독서모임 찾기</span>
+                    </div>
+                    <div class="feature feature-1 animated" data-animation="fadeIn">
+                        <span class="icon icon-primary icon-lg"><i class="li-diagram2"></i></span>
+                        <h4 class="mb-0">선정도서정보</h4>
+                        <span class="text-muted">각 독서모임에서 선정된 도서 확인</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+                
+                
+                <div class="col-md-6">
+                    <div class="box right">
+                        <h3>독서모임장</h3>
+                            <div class="col-6">
+                    <div class="feature feature-1 animated" data-animation="fadeIn" data-animation-delay="300">
+                        <span class="icon icon-primary icon-lg"><i class="li-feedback3"></i></span>
+                        <h4 class="mb-0">독서모임홍보</h4>
+                        <span class="text-muted">운영하고 있는 독서모임 홍보</span>
+                    </div>
+                    <div class="feature feature-1 animated" data-animation="fadeIn" data-animation-delay="300">
+                        <span class="icon icon-primary icon-lg"><i class="li-bag"></i></span>
+                        <h4 class="mb-0">독서모임 개설</h4>
+                        <span class="text-muted">운영하고 싶은 독서모임 개설</span>
+                    </div>
+                </div>
+    </div>
+    
+    
+            <hr class="hidden-xs-down">
+        </div>
+    </section>
+
+    <!-- Section / Prices -->
+    <!--<section id="prices" class="bg-light text-xs-center">-->
+
+    <!--    <div class="container-fluid container-custom">-->
+            <!-- BG Side -->
+    <!--        <div class="bg-side bg-left">-->
+    <!--            <img src="<%= asset_path 'img/items/glasses.png'%>" class="push-lg-4" alt="">-->
+    <!--            <img src="<%= asset_path 'img/items/coffee.png'%>" class="push-lg-4" alt="">-->
+    <!--        </div>-->
+            
+            <!-- BG Side -->
+    <!--        <div class="bg-side bg-right">-->
+    <!--            <img src="<%= asset_path 'img/items/camera.png'%>" class="pull-lg-4" alt="">-->
+    <!--        </div>-->
+
+    <!--        <h3 class="mb-0">Prices</h3>-->
+    <!--        <p class="lead text-muted mb-60">How much does it cost?</p>-->
+
+    <!--        <div class="row">-->
+    <!--            <div class="col-md-4">-->
+                    <!-- Price Table -->
+    <!--                <div class="price-table">-->
+    <!--                    <div class="head">-->
+    <!--                        <h4 class="title">Basic</h4>-->
+    <!--                        <span class="caption text-muted">Dedicated for small businesses</span>-->
+    <!--                    </div>-->
+    <!--                    <div class="price">-->
+    <!--                        <span class="currency text-primary">$</span>-->
+    <!--                        <span class="value text-primary">49</span>-->
+    <!--                        <span class="caption text-muted">/ per month</span>-->
+    <!--                    </div>-->
+    <!--                    <div class="content">-->
+    <!--                        <ul class="list-unstyled mb-0">-->
+    <!--                            <li>Self-employed</li>-->
+    <!--                            <li><strong>1-20</strong> invoices per month</li>-->
+    <!--                            <li>Free Consultations</li>-->
+    <!--                        </ul>-->
+    <!--                    </div>-->
+    <!--                    <button class="btn-bottom btn-dark">Buy it</button>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--            <div class="col-md-4">-->
+                    <!-- Price Table -->
+    <!--                <div class="price-table">-->
+    <!--                    <div class="head">-->
+    <!--                        <h4 class="title">Extended</h4>-->
+    <!--                        <span class="caption text-muted">Dedicated for small businesses</span>-->
+    <!--                    </div>-->
+    <!--                    <div class="price">-->
+    <!--                        <span class="currency text-primary">$</span>-->
+    <!--                        <span class="value text-primary">99</span>-->
+    <!--                        <span class="caption text-muted">/ per month</span>-->
+    <!--                    </div>-->
+    <!--                    <div class="content">-->
+    <!--                        <ul class="list-unstyled mb-0">-->
+    <!--                            <li>Self-employed</li>-->
+    <!--                            <li><strong>1-20</strong> invoices per month</li>-->
+    <!--                            <li>Depreciation of fixed assets</li>-->
+    <!--                            <li>Free Consultations</li>-->
+    <!--                        </ul>-->
+    <!--                    </div>-->
+    <!--                    <button class="btn-bottom btn-primary">Buy it</button>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--            <div class="col-md-4">-->
+                    <!-- Price Table -->
+    <!--                <div class="price-table">-->
+    <!--                    <div class="head">-->
+    <!--                        <h4 class="title">Pro</h4>-->
+    <!--                        <span class="caption text-muted">Dedicated for small businesses</span>-->
+    <!--                    </div>-->
+    <!--                    <div class="price">-->
+    <!--                        <span class="currency text-primary">$</span>-->
+    <!--                        <span class="value text-primary">199</span>-->
+    <!--                        <span class="caption text-muted">/ per month</span>-->
+    <!--                    </div>-->
+    <!--                    <div class="content">-->
+    <!--                        <ul class="list-unstyled mb-0">-->
+    <!--                            <li>Self-employed</li>-->
+    <!--                            <li><strong>1-20</strong> invoices per month</li>-->
+    <!--                            <li>Depreciation of fixed assets</li>-->
+    <!--                            <li>Free Consultations</li>-->
+    <!--                            <li>24/7 Support</li>-->
+    <!--                        </ul>-->
+    <!--                    </div>-->
+    <!--                    <button class="btn-bottom btn-dark">Buy it</button>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--        </div>-->
+    <!--    </div>-->
+
+    <!--</section>-->
+
+</div>

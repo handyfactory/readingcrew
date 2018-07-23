@@ -1,0 +1,39 @@
+<h1>독서모임들 페이지(관리자)</h1>
+   <p id="notice"><%= notice %></p>
+
+    <h1>Listing Clubs</h1>
+    
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Desc</th>
+          <th>Image</th>
+          <th>Time</th>
+          <th>Location</th>
+          <th>Pay</th>
+          <th colspan="3"></th>
+        </tr>
+      </thead>
+    
+      <tbody>
+        <% @clubs.each do |club| %>
+          <tr>
+            <td><%= club.title %></td>
+            <td><%= club.desc %></td>
+            <td><img src="<%= club.image %>" height="100" width="100"></td>
+            <td><%= club.time %></td>
+            <td><%= club.location %></td>
+            <td><%= club.pay %></td>
+            <td><%= link_to 'Show', club %></td>
+            <td><%= link_to 'Edit', edit_club_path(club) %></td>
+            <td><%= link_to 'Destroy', club, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    
+    <br>
+    <%if current_user.is_admin?%>
+    <%= link_to "크루 추가하기", new_club_path%>
+    <%end%>

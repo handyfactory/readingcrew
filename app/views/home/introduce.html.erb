@@ -1,0 +1,165 @@
+<header id="header">
+
+    <!-- Logo -->
+    <%unless user_signed_in?%>
+    <a href="/" class="logo">
+        <img src="<%= asset_path 'logo.png'%>" alt="">
+    </a>
+    <%else%>
+    <a href="/" class="owner">
+        <img width="80" height="80" src="<%= current_user.image%>" alt="" class="image">
+        <div class="content">
+            <h2 class="name"><%= current_user.name%></h2>
+            <h2 class="caption text-muted"><%= current_user.email%></h2>
+        </div>
+    </a>
+    <%end%>
+    <!-- Navigation -->
+    <nav id="main-menu">
+        <div class="nav-wrapper">
+            <ul class="nav nav-primary">
+                <li><a href="/" ><i class="li-home"></i>Start</a></li>
+                <li><a href="/home/introduce" class="active"><i class="li-feedback"></i>About</a></li>
+                <li><a href="/home/services"><i class="li-laptop"></i>Services</a></li>
+                <li><a href="/clubs"><i class="li-imac"></i>독서모임</a></li>
+                <li><a href="/cbooks"><i class="li-pen"></i>선정도서</a></li>
+                <li><a href="/clubs/apply"><i class="li-email"></i>등록신청</a></li>
+                <li class="has-children">
+                    <a href="#"><i class="li-heart"></i>Mypage</a>
+                    <ul>
+                        <li><a href="#" class="go-back"><i class="ti-angle-left"></i>뒤로가기</a></li>
+                        <li class="has-children">
+                            <a href="/">내 서재</a>
+                            <ul>
+                                <li><a href="#" class="go-back"><i class="ti-angle-left"></i>뒤로가기</a></li>
+                                <li><a href="index-one-page.html">읽은 책</a></li>
+                                <li><a href="index-one-page-dark.html">읽는 책</a></li>
+                                <li><a href="index-one-page-agency.html">읽을 책<span class="tag tag-info">New!</span></a></li>
+                                
+                            </ul>
+                        </li>
+                        <li class="has-children">
+                            <a href="/">내 독서모임</a>
+                            <ul>
+                                <li><a href="#" class="go-back"><i class="ti-angle-left"></i>뒤로가기</a></li>
+                                <li><a href="index-one-page.html">최근 팔로우</a></li>
+                                <li><a href="index-one-page-dark.html">최근 댓글</a></li>
+                                
+                                
+                            </ul>
+                        </li>
+                        <li class="has-children">
+                            <a href="#">팔로잉한 독서모임</a>
+                            <ul>
+                                <li><a href="#" class="go-back"><i class="ti-angle-left"></i>Extra</a></li>
+                                <li><a href="blog.html">Blog</a></li>
+                                <li><a href="blog-sidebar-left.html">Blog Sidebar Left</a></li>
+                                <li><a href="blog-sidebar-right.html">Blog Sidebar Right</a></li>
+                                <li><a href="blog-post.html">Blog Post</a></li>
+                                <li><a href="blog-post-sidebar-left.html">Blog Post Sidebar Left</a></li>
+                                <li><a href="blog-post-sidebar-right.html">Blog Post Sidebar Right</a></li>
+                            </ul>
+                        </li>
+                        <li class="has-children">
+                            <a href="#">내가 남긴 기록들</a>
+                            <ul>
+                                <li><a href="#" class="go-back"><i class="ti-angle-left"></i>Extra</a></li>
+                                <li><a href="portfolio-2-cols.html">Portfolio 2 Columns</a></li>
+                                <li><a href="portfolio-3-cols.html">Portfolio 3 Columns</a></li>
+                                <li><a href="portfolio-project-1.html">Single Project #1</a></li>
+                                <li><a href="portfolio-project-2.html">Single Project #2</a></li>
+                            </ul>
+                        </li>
+                        <li class="has-children">
+                            <a href="#">친구 목록</a>
+                            <ul>
+                                <li><a href="#" class="go-back"><i class="ti-angle-left"></i>Extra</a></li>
+                                <li><a href="footer-light.html">Footer Light</a></li>
+                                <li><a href="footer-dark.html">Footer Dark</a></li>
+                                <li><a href="footer-widgetized.html">Footer Widgetized</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#">정보수정</a></li>
+                        
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <span class="selector"></span>
+    </nav>
+
+</header>
+
+<div id="content">
+
+    <!-- Page Title -->
+    <div class="page-title bg-dark dark">
+        <div class="bg-image"><img src="<%= asset_path 'img/photos/coaching_bg02.jpg'%>" alt=""></div>
+        <div class="container-fluid container-custom">
+            <h1>리딩크루(R/Leading Crew)</h1>
+            <p class="lead text-muted">읽는 자(Reader)가 세상을 이끄는 자(Leader)라 믿는 자들의 모임</p>
+        </div>
+    </div>
+    
+    <!-- Section / About -->
+    <section id="about" class="section">
+
+        <div class="container container-sm">
+
+            <!-- BG Side -->
+            <div class="bg-side bg-left">
+                <img src="<%= asset_path 'img/items/glasses.png'%>" alt="">
+            </div>
+            
+            <!-- BG Side -->
+            <div class="bg-side bg-right">
+                <img src="<%= asset_path 'img/items/camera.png'%>" alt="">
+            </div>
+
+            <h4>리딩크루는요?</h4>
+            <p class="lead">책을 좋아하는 변방의 숨은 고수를 모십니다. 여러분들과 뜻을 함께하는 사람들이 이 곳에 있습니다.</p>
+            <p>2010년부터 독서모임을 참여하고 운영해왔습니다. 이 안에서 나와 타인의 성장을 보았습니다. 성장에 목마른 당신을 이 곳에 초대합니다. 함께해요.</p>
+            <div class="blockquotes">
+                <!-- Blockquote -->
+                <blockquote class="blockquote animated" data-animation="fadeInLeft">
+                    <p>세상에~ 책을 읽는 사람들이 이렇게 많다니!</p>
+                    <footer>
+                        <img src="<%= asset_path 'img/avatars/avatar01.jpg'%>" alt="">
+                        <span class="name">김리딩<span class="text-muted">, Google</span></span>
+                    </footer>
+                </blockquote>
+                <!-- Blockquote -->
+                <blockquote class="blockquote blockquote-primary animated" data-animation="fadeInRight" data-animation-delay="300">
+                    <p>함께 읽으니 기쁨이 배가 되루는걸?</p>
+                    <footer>
+                        <img src="<%= asset_path 'img/avatars/avatar03.jpg'%>" alt="">
+                        <span class="name">이크루<span class="text-muted">, LinkedIn</span></span>
+                    </footer>
+                </blockquote>
+            </div>
+
+            <h4 class="mt-60">리딩크루 성과지표(100 만점)</h4>
+            <!-- Progress -->
+            <div class="progress-wrapper">
+                <progress class="progress mb-5" value="<%=@user.size%>" max="100"></progress>
+                <span class="value"></span>
+                <strong class="text-sm">가입자수</strong>
+            </div> 
+            <!-- Progress -->
+            <div class="progress-wrapper">
+                <progress class="progress mb-5" value="<%=@cbook.size%>" max="100"></progress>
+                <span class="value"></span>
+                <strong class="text-sm">누적 선정도서</strong>
+            </div> 
+            <!-- Progress -->
+            <div class="progress-wrapper">
+                <progress class="progress mb-5" value="<%=@club.size%>" max="100"></progress>
+                <span class="value"></span>
+                <strong class="text-sm">독서모임 수</strong>
+            </div> 
+
+        </div>
+
+    </section>
+
+</div>

@@ -1,0 +1,199 @@
+<header id="header">
+
+    <!-- Logo -->
+    <%unless user_signed_in?%>
+    <a href="/" class="logo">
+        <img src="<%= asset_path 'logo.png'%>" alt="">
+    </a>
+    <%else%>
+    <a href="/" class="owner">
+        <img width="80" height="80" src="<%= current_user.image%>" alt="" class="image">
+        <div class="content">
+            <h2 class="name"><%= current_user.name%></h2>
+            <h2 class="caption text-muted"><%= current_user.email%></h2>
+        </div>
+    </a>
+    <%end%>
+
+    <!-- Navigation -->
+     <nav id="main-menu">
+        <div class="nav-wrapper">
+            <ul class="nav nav-primary">
+                <li><a href="/" class="active"><i class="li-home"></i>Start</a></li>
+                <li><a href="/home/introduce"><i class="li-feedback"></i>About</a></li>
+                <li><a href="/home/services"><i class="li-laptop"></i>Services</a></li>
+                <li><a href="/clubs"><i class="li-imac"></i>독서모임</a></li>
+                <li><a href="/cbooks"><i class="li-pen"></i>선정도서</a></li>
+                <li><a href="/clubs/apply"><i class="li-email"></i>등록신청</a></li>
+                <li class="has-children">
+                    <a href="#"><i class="li-heart"></i>Mypage</a>
+                    <ul>
+                        <li><a href="#" class="go-back"><i class="ti-angle-left"></i>뒤로가기</a></li>
+                        <li class="has-children">
+                            <a href="/">내 서재</a>
+                            <ul>
+                                <li><a href="#" class="go-back"><i class="ti-angle-left"></i>뒤로가기</a></li>
+                                <li><a href="index-one-page.html">읽은 책</a></li>
+                                <li><a href="index-one-page-dark.html">읽는 책</a></li>
+                                <li><a href="index-one-page-agency.html">읽을 책<span class="tag tag-info">New!</span></a></li>
+                                
+                            </ul>
+                        </li>
+                        <li class="has-children">
+                            <a href="/">내 독서모임</a>
+                            <ul>
+                                <li><a href="#" class="go-back"><i class="ti-angle-left"></i>뒤로가기</a></li>
+                                <li><a href="index-one-page.html">최근 팔로우</a></li>
+                                <li><a href="index-one-page-dark.html">최근 댓글</a></li>
+                                
+                                
+                            </ul>
+                        </li>
+                        <li class="has-children">
+                            <a href="#">팔로잉한 독서모임</a>
+                            <ul>
+                                <li><a href="#" class="go-back"><i class="ti-angle-left"></i>Extra</a></li>
+                                <li><a href="blog.html">Blog</a></li>
+                                <li><a href="blog-sidebar-left.html">Blog Sidebar Left</a></li>
+                                <li><a href="blog-sidebar-right.html">Blog Sidebar Right</a></li>
+                                <li><a href="blog-post.html">Blog Post</a></li>
+                                <li><a href="blog-post-sidebar-left.html">Blog Post Sidebar Left</a></li>
+                                <li><a href="blog-post-sidebar-right.html">Blog Post Sidebar Right</a></li>
+                            </ul>
+                        </li>
+                        <li class="has-children">
+                            <a href="#">내가 남긴 기록들</a>
+                            <ul>
+                                <li><a href="#" class="go-back"><i class="ti-angle-left"></i>Extra</a></li>
+                                <li><a href="portfolio-2-cols.html">Portfolio 2 Columns</a></li>
+                                <li><a href="portfolio-3-cols.html">Portfolio 3 Columns</a></li>
+                                <li><a href="portfolio-project-1.html">Single Project #1</a></li>
+                                <li><a href="portfolio-project-2.html">Single Project #2</a></li>
+                            </ul>
+                        </li>
+                        <li class="has-children">
+                            <a href="#">친구 목록</a>
+                            <ul>
+                                <li><a href="#" class="go-back"><i class="ti-angle-left"></i>Extra</a></li>
+                                <li><a href="footer-light.html">Footer Light</a></li>
+                                <li><a href="footer-dark.html">Footer Dark</a></li>
+                                <li><a href="footer-widgetized.html">Footer Widgetized</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#">정보수정</a></li>
+                        
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <span class="selector"></span>
+    </nav>
+
+</header>
+<div id="content">
+    <section id="latest-posts" class="section">
+        <div class="container-fluid container-custom">
+            <h2 class="mb-50">최근 선정도서
+            <a href="/clubs/cbooks/<%= @club.id %>" class="ml-20 btn btn-secondary btn-sm animated" data-animation="fadeInRight">상세보기</a>
+            <%if @club.rolls.find_by(user_id: current_user.id)%>
+              <%if @club.rolls.find_by(user_id: current_user.id).relation == "captain" %>
+                <a href="/cbooks/new/<%= @club.id%>" class="ml-20 btn btn-secondary btn-sm animated" data-animation="fadeInRight">선정도서 올리기</a>
+              <%end%>
+            <%end%>
+            
+            </h2>
+            
+            <div class="carousel carousel-items" data-slick='{
+                "slidesToShow": 3, 
+                "slidesToScroll": 1,
+                "responsive": [
+                    {
+                        "breakpoint": 991,
+                        "settings": {
+                            "slidesToShow": 2
+                        }
+                    },
+                    {
+                        "breakpoint": 575,
+                        "settings": {
+                            "slidesToShow": 1
+                        }
+                    }
+                ]
+            }'>
+                <% count = 0%>
+                <% @club.cbooks.sort_by{|x| x.register_at}.reverse.each do |cbook|%>
+                <% count += 1%>
+                <% if count == 6%>
+                    <% count = 0%>
+                    <% break%>
+                <%end%>
+                <div class="carousel-item">
+                    <!-- Post - Item -->
+                    <article class="post item">
+                        <div class="post-image">
+                            <img src="<%= cbook.image%>" alt="">
+                        </div>
+                        <div class="post-content">
+                            <span class="date text-muted"><%= cbook.register_at.strftime("%m %d, %Y")%></span>
+                            <h4><a href="/cbooks/<%= cbook.id%>"><%= cbook.title%></a></h4>
+                            <p><%= cbook.contents%></p>
+                            <a href="/cbooks/<%= cbook.id%>" class="btn btn-primary btn-sm">상세보기</a>
+                        </div>
+                        <ul class="post-meta">
+                            <li><i class="li-usb1"></i><%=cbook.category%></li>
+                            <li><i class="li-feedback"></i>리뷰 : <%= cbook.replies.size%>개</li>
+                        </ul>
+                        
+                    </article>
+                    
+                </div>
+                <%end%>
+                
+                
+            </div>
+        </div>
+        <div class="blockquotes">
+          <blockquote class="blockquote animated" data-animation="fadeInLeft">
+              <h4><%="  캡틴"%></h4>
+          </blockquote>
+        </div>
+        <% @club.users.each do |user|%>
+            <%if user.rolls.find_by(club_id: @club.id).relation=="captain"%>
+                <div class="blockquotes">
+                  <blockquote class="blockquote animated" data-animation="fadeInLeft">
+                      <footer>
+                          <img src="<%= user.image%>" alt="">
+                          <span class="name"><%= user.name%><span class="text-muted">, <%= user.email%></span></span>
+                      </footer>
+                  </blockquote>
+                </div>
+            <%end%>
+        <%end%>
+        
+        
+
+
+    </section>
+
+
+<p id="notice"><%= notice %></p>
+
+<%= link_to 'Edit', edit_club_path(@club) %> |
+<%= link_to 'Back', clubs_path %><br>
+
+
+<%if @club.rolls.find_by(user_id: current_user.id)%>
+  <% if @club.rolls.find_by(user_id: current_user.id).relation=="captain"%>
+    <%= "난 방장이다"%>
+  <%end%>
+<%else%>
+  <% unless current_user.is_admin?%>
+  <%= "팔로우해주세요"%>
+  <%end%>
+<%end%>
+
+<%if current_user.is_admin?%>
+관리자 : <%= User.find(@club.rolls.find_by(relation: "captain").user_id).email %>
+<%end%>
+</div>

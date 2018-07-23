@@ -1,0 +1,274 @@
+<header id="header">
+
+     <!-- Logo -->
+    <%unless user_signed_in?%>
+    <a href="/" class="logo">
+        <img src="<%= asset_path 'logo.png'%>" alt="">
+    </a>
+    <%else%>
+    <a href="/" class="owner">
+        <img width="80" height="80" src="<%= current_user.image%>" alt="" class="image">
+        <div class="content">
+            <h2 class="name"><%= current_user.name%></h2>
+            <h2 class="caption text-muted"><%= current_user.email%></h2>
+        </div>
+    </a>
+    <%end%>
+
+    <!-- Navigation -->
+     <nav id="main-menu">
+        <div class="nav-wrapper">
+            <ul class="nav nav-primary">
+                <li><a href="/" ><i class="li-home"></i>Start</a></li>
+                <li><a href="/home/introduce"><i class="li-feedback"></i>About</a></li>
+                <li><a href="/home/services"><i class="li-laptop"></i>Services</a></li>
+                <li><a href="/clubs"><i class="li-imac"></i>독서모임</a></li>
+                <li><a href="/cbooks" class="active"><i class="li-pen"></i>선정도서</a></li>
+                <li><a href="/clubs/apply"><i class="li-email"></i>등록신청</a></li>
+                <li class="has-children">
+                    <a href="#"><i class="li-heart"></i>Mypage</a>
+                    <ul>
+                        <li><a href="#" class="go-back"><i class="ti-angle-left"></i>뒤로가기</a></li>
+                        <li class="has-children">
+                            <a href="/">내 서재</a>
+                            <ul>
+                                <li><a href="#" class="go-back"><i class="ti-angle-left"></i>뒤로가기</a></li>
+                                <li><a href="index-one-page.html">읽은 책</a></li>
+                                <li><a href="index-one-page-dark.html">읽는 책</a></li>
+                                <li><a href="index-one-page-agency.html">읽을 책<span class="tag tag-info">New!</span></a></li>
+                                
+                            </ul>
+                        </li>
+                        <li class="has-children">
+                            <a href="/">내 독서모임</a>
+                            <ul>
+                                <li><a href="#" class="go-back"><i class="ti-angle-left"></i>뒤로가기</a></li>
+                                <li><a href="index-one-page.html">최근 팔로우</a></li>
+                                <li><a href="index-one-page-dark.html">최근 댓글</a></li>
+                                
+                                
+                            </ul>
+                        </li>
+                        <li class="has-children">
+                            <a href="#">팔로잉한 독서모임</a>
+                            <ul>
+                                <li><a href="#" class="go-back"><i class="ti-angle-left"></i>Extra</a></li>
+                                <li><a href="blog.html">Blog</a></li>
+                                <li><a href="blog-sidebar-left.html">Blog Sidebar Left</a></li>
+                                <li><a href="blog-sidebar-right.html">Blog Sidebar Right</a></li>
+                                <li><a href="blog-post.html">Blog Post</a></li>
+                                <li><a href="blog-post-sidebar-left.html">Blog Post Sidebar Left</a></li>
+                                <li><a href="blog-post-sidebar-right.html">Blog Post Sidebar Right</a></li>
+                            </ul>
+                        </li>
+                        <li class="has-children">
+                            <a href="#">내가 남긴 기록들</a>
+                            <ul>
+                                <li><a href="#" class="go-back"><i class="ti-angle-left"></i>Extra</a></li>
+                                <li><a href="portfolio-2-cols.html">Portfolio 2 Columns</a></li>
+                                <li><a href="portfolio-3-cols.html">Portfolio 3 Columns</a></li>
+                                <li><a href="portfolio-project-1.html">Single Project #1</a></li>
+                                <li><a href="portfolio-project-2.html">Single Project #2</a></li>
+                            </ul>
+                        </li>
+                        <li class="has-children">
+                            <a href="#">친구 목록</a>
+                            <ul>
+                                <li><a href="#" class="go-back"><i class="ti-angle-left"></i>Extra</a></li>
+                                <li><a href="footer-light.html">Footer Light</a></li>
+                                <li><a href="footer-dark.html">Footer Dark</a></li>
+                                <li><a href="footer-widgetized.html">Footer Widgetized</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#">정보수정</a></li>
+                        
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <span class="selector"></span>
+    </nav>
+
+</header>
+<!-- Header / End -->
+
+<!-- Content -->
+<div id="content">
+    
+    <!-- Section / Blog -->
+    <section id="blog" class="section">
+
+        <div class="container-fluid container-custom clearfix">
+            <!-- Main -->
+            <div class="main left">
+                <!-- Post / Single -->
+                <article class="post single">
+                    <nav class="post-nav btn-group">
+                        <% cbs = @cbook.club.cbooks%>
+                        <% num = cbs.index(@cbook)%>
+                        
+                        <%if num == 0%>
+                            <a href="/clubs/<%= @cbook.club.id%>" class="btn btn-secondary btn-sm"><i class="ti-layout-grid2"></i></a>
+                            <% if cbs.size != 1%>
+                            <a href="/cbooks/<%=cbs[num + 1].id%>" class="btn btn-secondary btn-sm"><i class="ti-angle-right"></i></a>
+                            <% end%>
+                        <%elsif  num == cbs.size-1 %>
+                            <a href="/cbooks/<%=cbs[num - 1].id%>" class="btn btn-secondary btn-sm"><i class="ti-angle-left"></i></a>
+                            <a href="/clubs/<%= @cbook.club.id%>" class="btn btn-secondary btn-sm"><i class="ti-layout-grid2"></i></a>
+                        <%else%>
+                            <a href="/cbooks/<%=cbs[num - 1].id%>" class="btn btn-secondary btn-sm"><i class="ti-angle-left"></i></a>
+                            <a href="/clubs/<%= @cbook.club.id%>" class="btn btn-secondary btn-sm"><i class="ti-layout-grid2"></i></a>
+                            <a href="/cbooks/<%=cbs[num + 1].id%>" class="btn btn-secondary btn-sm"><i class="ti-angle-right"></i></a>
+                        <%end%>
+                    </nav>
+                    <span class="date text-muted"><%= @cbook.register_at.strftime("%m %d, %Y")%></span>
+                    <h5><%= @cbook.club.title%>의 <%= @cbook.times%>회 선정도서</h5>
+                    <h4 class="post-title"><%= @cbook.title%></h4>
+                    <ul class="post-meta">
+                        <li><i class="li-usb1"></i><%= @cbook.category%></li>
+                        <li><i class="li-feedback"></i>리뷰 : <%= @cbook.replies.size%>개</li>
+                    </ul>
+                    <div class="post-image"><img height="100" width ="100" src="<%= @cbook.image%>" alt=""></div>
+                    <div class="post-content">
+                        <p class="lead"><%= @cbook.why.html_safe%></p>
+                        <p></p>
+                        <!-- Blockquote -->
+                        <blockquote class="blockquote animated" data-animation="fadeInLeft">
+                            <p><%= "이번주 선정도서입니다^^"%></p>
+                            <footer>
+                               
+                                    <div class="avatar"><img src="<%= User.find(@cbook.club.rolls.find_by(relation: "captain").user_id).image%>" alt=""></div>
+                                    <div class="content">
+                                        <span class="details"><%= User.find(@cbook.club.rolls.find_by(relation: "captain").user_id).name%><span class="text-muted"><%= User.find(@cbook.club.rolls.find_by(relation: "captain").user_id).email%></span></span>
+                                        <p></p>
+                                    </div>
+                                
+                                <!--<img src="" alt="">-->
+                                
+                            </footer>
+                        </blockquote>
+                    </div>
+                    <div class="post-comments post-module">
+                        <h4>Comments</h4>
+                        <div class="content">
+                            <ul class="comments">
+                                
+                                <% @cbook.replies.each do |reply|%>
+                                    <li>
+                                        <div class="avatar"><img src="<%= reply.user.image%>" alt=""></div>
+                                        <div class="content">
+                                            <span class="details"><%= reply.user.name%> on <%= reply.created_at.strftime("%m %d, %Y")%>,  <a href="/cbooks/reply2/<%= reply.id%>" class="text-primary">Reply</a></span>
+                                            <p><%= reply.comment%></p>
+                                        </div>
+                                        
+                                        <% if reply.reply2s%>    
+                                        <ul>
+                                            <% reply.reply2s.each do |reply2|%>
+                                                <li>
+                                                <div class="avatar"><img src="<%= reply2.user.image%>" alt=""></div>
+                                                <div class="content">
+                                                    <span class="details"><%= reply2.user.name%> on <%= reply2.created_at.strftime("%m %d, %Y")%>, <a href="/cbooks/reply2/<%= reply.id%>" class="text-primary" >Reply</a></span>
+                                                    <p><%= reply2.comment%></p>
+                                                </div>
+                                                </li>
+                                            <% end%>
+                                        </ul>
+                                        <%end%>
+                                        
+                                        <%if reply.reply2%>
+                                            <% reply.update(reply2: false)%>
+                                                <ul>
+                                                    <div class="content">
+                                                        <form action="/cbooks/reply2_register/<%= reply.id%>" id="add-comment" class="validate-form" method= "post">
+                                                            <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token%>">
+                                                            <input type="hidden" name = "user_id" value="<%= current_user.id%>" />
+                                                            
+                                                            <div class="form-group">
+                                                                <textarea name="comment" id="comment" cols="30" rows="4" class="form-control" placeholder="Comment" required></textarea>
+                                                            </div>
+                                                            <button class="btn btn-submit">Send a comment</button>
+                                                        </form>
+                                                    </div>
+                                                </ul>
+                                        <%end%>
+                                            
+                                    </li>
+                                    
+                                <% end%>
+                                
+                            </ul>
+                        </div>
+                        <div class="post-add-comment post-module">
+                        <h4>리뷰 남기기</h4>
+                        <div class="content">
+                            <form action="/cbooks/reply/<%=@cbook.id%>" id="add-comment" class="validate-form" method= "post">
+                                <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token%>">
+                                <input type="hidden" name = "user_id" value="<%= current_user.id%>" />
+                                
+                                <div class="form-group">
+                                    <textarea name="comment" id="comment" cols="30" rows="4" class="form-control" placeholder="Comment" required></textarea>
+                                </div>
+                                <button class="btn btn-submit">Send a comment</button>
+                            </form>
+                        </div>
+                        
+                    </div>
+                    </div>
+                    
+                    
+                </article>
+            </div>
+            <!-- Sidebar -->
+            <div class="sidebar right">
+                <!-- Widget - Recent posts -->
+                <div class="widget widget-recent-posts">
+                    <h6 class="text-muted">Recent Posts</h6>
+                    <ul class="list-posts">
+                        <li>
+                            <a href="blog-post-sidebar-right.html">Crazy developer ideas on 2016</a>
+                            <span class="date">February 14, 2015</span>
+                        </li>
+                        <li>
+                            <a href="blog-post-sidebar-right.html">Our road trip to London!</a>
+                            <span class="date">February 14, 2015</span>
+                        </li>
+                        <li>
+                            <a href="blog-post-sidebar-right.html">New iOS design concept</a>
+                            <span class="date">February 14, 2015</span>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Widget - Twitter -->
+                <div class="widget widget-twitter">
+                    <h6 class="text-muted">Latest Tweets</h6>
+                    <div class="twitter-feed" data-count="2"></div>
+                </div>
+                <!-- Widget - Newsletter -->
+                <div class="widget widget-newsletter">
+                    <h6 class="text-muted">Subscribe Us</h6>
+                    <form action="//suelo.us12.list-manage.com/subscribe/post-json?u=ed47dbfe167d906f2bc46a01b&amp;id=24ac8a22ad" id="sign-up-form" class="sign-up-form validate-form" method="POST"
+                        data-message-error="Opps... Something went wrong - please try again later"
+                        data-message-success="Yeah! You will recieve a confirmation email soon..."
+                    >
+                        <div class="form-group">
+                            <input type="email"  name="EMAIL" id="mce-EMAIL" value="" class="form-control" placeholder="Your e-mail..." required>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-submit">
+                                <span>Subscribe!</span>
+                                <svg class="loader loader-white" width="32px" height="32px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><circle class="circle" fill="none" stroke-width="2" stroke-linecap="round" cx="16" cy="16" r="14"></circle></svg>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <!-- Widget - Instagram -->
+                <div class="widget widget-instagram">
+                    <h6 class="text-muted">Instagram Feed</h6>
+                    <div id="instagram-feed" class="instagram-grid clearfix" data-limit="6"></div>
+                </div>
+            </div>
+        </div>
+        
+    </section>
+
+</div>

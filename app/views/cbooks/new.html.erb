@@ -1,0 +1,230 @@
+<header id="header">
+
+    <!-- Logo -->
+     <%unless user_signed_in?%>
+    <a href="/" class="logo">
+        <img src="<%= asset_path 'logo.png'%>" alt="">
+    </a>
+    <%else%>
+    <a href="/" class="owner">
+        <img width="80" height="80" src="<%= current_user.image%>" alt="" class="image">
+        <div class="content">
+            <h2 class="name"><%= current_user.name%></h2>
+            <h2 class="caption text-muted"><%= current_user.email%></h2>
+        </div>
+    </a>
+    <%end%>
+
+    <!-- Navigation -->
+    <nav id="main-menu">
+        <div class="nav-wrapper">
+            <ul class="nav nav-primary">
+                <li><a href="/" ><i class="li-home"></i>Start</a></li>
+                <li><a href="/home/introduce"><i class="li-feedback"></i>About</a></li>
+                <li><a href="/home/services"><i class="li-laptop"></i>Services</a></li>
+                <li><a href="/clubs"><i class="li-imac"></i>독서모임</a></li>
+                <li><a href="/cbooks" class="active"><i class="li-pen"></i>선정도서</a></li>
+                <li><a href="/clubs/apply"><i class="li-email"></i>등록신청</a></li>
+                <li class="has-children">
+                    <a href="#"><i class="li-heart"></i>Mypage</a>
+                    <ul>
+                        <li><a href="#" class="go-back"><i class="ti-angle-left"></i>뒤로가기</a></li>
+                        <li class="has-children">
+                            <a href="/">내 서재</a>
+                            <ul>
+                                <li><a href="#" class="go-back"><i class="ti-angle-left"></i>뒤로가기</a></li>
+                                <li><a href="index-one-page.html">읽은 책</a></li>
+                                <li><a href="index-one-page-dark.html">읽는 책</a></li>
+                                <li><a href="index-one-page-agency.html">읽을 책<span class="tag tag-info">New!</span></a></li>
+                                
+                            </ul>
+                        </li>
+                        <li class="has-children">
+                            <a href="/">내 독서모임</a>
+                            <ul>
+                                <li><a href="#" class="go-back"><i class="ti-angle-left"></i>뒤로가기</a></li>
+                                <li><a href="index-one-page.html">최근 팔로우</a></li>
+                                <li><a href="index-one-page-dark.html">최근 댓글</a></li>
+                                
+                                
+                            </ul>
+                        </li>
+                        <li class="has-children">
+                            <a href="#">팔로잉한 독서모임</a>
+                            <ul>
+                                <li><a href="#" class="go-back"><i class="ti-angle-left"></i>Extra</a></li>
+                                <li><a href="blog.html">Blog</a></li>
+                                <li><a href="blog-sidebar-left.html">Blog Sidebar Left</a></li>
+                                <li><a href="blog-sidebar-right.html">Blog Sidebar Right</a></li>
+                                <li><a href="blog-post.html">Blog Post</a></li>
+                                <li><a href="blog-post-sidebar-left.html">Blog Post Sidebar Left</a></li>
+                                <li><a href="blog-post-sidebar-right.html">Blog Post Sidebar Right</a></li>
+                            </ul>
+                        </li>
+                        <li class="has-children">
+                            <a href="#">내가 남긴 기록들</a>
+                            <ul>
+                                <li><a href="#" class="go-back"><i class="ti-angle-left"></i>Extra</a></li>
+                                <li><a href="portfolio-2-cols.html">Portfolio 2 Columns</a></li>
+                                <li><a href="portfolio-3-cols.html">Portfolio 3 Columns</a></li>
+                                <li><a href="portfolio-project-1.html">Single Project #1</a></li>
+                                <li><a href="portfolio-project-2.html">Single Project #2</a></li>
+                            </ul>
+                        </li>
+                        <li class="has-children">
+                            <a href="#">친구 목록</a>
+                            <ul>
+                                <li><a href="#" class="go-back"><i class="ti-angle-left"></i>Extra</a></li>
+                                <li><a href="footer-light.html">Footer Light</a></li>
+                                <li><a href="footer-dark.html">Footer Dark</a></li>
+                                <li><a href="footer-widgetized.html">Footer Widgetized</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#">정보수정</a></li>
+                        
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <span class="selector"></span>
+    </nav>
+</header>
+
+<div id="content">
+
+    <!-- Page Title -->
+    <div class="page-title pb-0">
+        <div class="container-fluid container-custom">
+            <h1>선정도서 등록</h1>
+            <p class="lead text-muted">이번주 선정도서를 등록하세요.</p>
+        </div>
+    </div>
+    
+    <!-- Section / Blog -->
+    <section id="blog" class="section">
+
+        <div class="container-fluid container-custom clearfix">
+            
+            <!-- Main -->
+            <div class="main ">
+                <div class="row masonry">  
+                    <div class="masonry-sizer col-sm-6 col-xs-12">
+                        <h4>도서검색</h4>
+                        <%= form_tag('/cbooks/searching', method: :get) do%>
+                            <%= text_field_tag :title%>
+                            
+                            <%= hidden_field_tag :club_id, @club_id%>
+                            <%= submit_tag("검색")%>
+                        <%end%><br>
+                    </div>
+                    
+                </div>
+                
+            </div>
+        </div>
+    
+    </section>
+    <% unless @choose%>
+        <section class="section">
+        <div class="main ">
+        <% if @sbooks%>
+            <table>
+              <thead>
+                <tr>
+                    <th>제목</th>
+                    <th>작가</th>
+                    <th>이미지</th>
+                    <th>분야</th>
+                    <th>선택</th>
+                    
+                </tr>
+              </thead>
+        
+              <tbody>
+                <% @sbooks.each do |book|%>
+                  <tr>
+                    <td><%= book.title%></td>
+                    <td><%= book.authors%></td>
+                    <td><img src="<%= book.thumbnail%>"></td>
+                    <td><%= book.category%></td>
+                    <td>
+                        <%= form_tag '/cbooks/choose', method: :get do%>
+                            <%= hidden_field_tag :title, "#{book.title}"%>
+                            <%= hidden_field_tag :authors, "#{book.authors}"%>
+                            <%= hidden_field_tag :thumbnail, "#{book.thumbnail}"%>
+                            <%= hidden_field_tag :category, "#{book.category}"%>
+                            <%= hidden_field_tag :contents, "#{book.contents}"%>
+                            <%= hidden_field_tag :club_id, @club_id%>
+                            <%= submit_tag("선택")%>
+                        <% end%>
+                    </td>
+    
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+        <% end%>
+     
+        </div>
+        </section>
+    <%else%>
+        <section class="section">
+            <div class="container-fluid container-custom clearfix">
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="box left">
+                            <div class="image">
+                                <img height="150" width="150" src="<%= @choose.thumbnail%>" alt="">
+                                <div class="title">
+                                    <h5 class="mb-0"><%= @choose.title%></h5>
+                                    <p class="text-sm text-muted mb-0"><%= @choose.authors%></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="box right">
+                            <div class="masonry-sizer">
+                               <!-- Post - Item -->
+                                <%= form_tag("/cbooks", method: :post)do%>
+                                    <%= hidden_field_tag :title, @choose.title%>
+                                    <%= hidden_field_tag :authors, @choose.authors%>
+                                    <%= hidden_field_tag :thumbnail, @choose.thumbnail%>
+                                    <%= hidden_field_tag :category, @choose.category%>
+                                    <%= hidden_field_tag :contents, @choose.contents%>
+                                    
+                                    <%= label_tag(:times, "회차 : ")%>
+                                    <%= text_field_tag :times%>
+                                    
+                                    <%= label_tag(:register_at, "등록날짜 : ")%>
+                                    <%= date_field_tag :register_at%>
+                                 
+                                    <%= label_tag(:why, "선정이유 : ")%>
+                                    
+                                    <%= text_area_tag :why, "", :class => "tinymce", :rows => 30 %>
+                                    
+                                    <%= hidden_field_tag :club_id, @club_id%>
+                                    
+                                    
+                                    
+                                    <%= submit_tag("등록")%>
+                                <%end%>
+                                <%= tinymce %>
+                                <%= link_to 'Back', cbooks_path %>
+                            </div>
+                            
+                        </div>
+                        
+                    </div>
+                </div>
+                
+                </div>
+            <!-- Main -->
+                
+            </div>
+            
+        </section>
+    <%end%>
+</div>
