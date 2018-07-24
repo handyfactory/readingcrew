@@ -7,7 +7,7 @@ class ClubsController < ApplicationController
   # GET /clubs
   # GET /clubs.json
   def index
-    @clubs = Club.all
+    @clubs = Club.page(params[:page]).per(6)
   end
 
   # GET /clubs/1
@@ -17,7 +17,7 @@ class ClubsController < ApplicationController
   end
   
   def cbooks
-    @cbooks = @club.cbooks
+    @cbooks = @club.cbooks.page(params[:page]).per(4)
     
   end
 

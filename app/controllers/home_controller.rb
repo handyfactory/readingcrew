@@ -5,6 +5,7 @@ class HomeController < ApplicationController
   end
   
   def mypage
+    @loginCss = "login-body"
   end
   
   def introduce

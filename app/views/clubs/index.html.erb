@@ -2,19 +2,31 @@
 <header id="header">
 
      <!-- Logo -->
-    <%unless user_signed_in?%>
+   <%unless user_signed_in?%>
     <a href="/" class="logo">
         <img src="<%= asset_path 'logo.png'%>" alt="">
+        
+        <a href="/users/sign_up" class="ml-20 btn btn-secondary btn-sm animated" >회원가입</a>
+        <a href="/users/sign_in" class="ml-20 btn btn-secondary btn-sm animated" >로그인</a>
+        
     </a>
     <%else%>
-    <a href="/" class="owner">
-        <img width="80" height="80" src="<%= current_user.image%>" alt="" class="image">
-        <div class="content">
-            <h2 class="name"><%= current_user.name%></h2>
-            <h2 class="caption text-muted"><%= current_user.email%></h2>
-        </div>
-    </a>
+        <a href="/" class="owner">
+            <img width="80" height="80" src="<%= current_user.image%>" alt="" class="image">
+            <div class="content">
+                <h2 class="name"><%= current_user.name%></h2>
+                <h2 class="caption text-muted"><%= current_user.email%></h2>
+            </div>
+        </a>
+        
+            <a href="/users/sign_out" class="ml-20 btn btn-secondary btn-sm animated" data-method="delete">로그아웃</a>
+        
     <%end%>
+    <nav id="main">
+        <div class="nav-wrapper">
+            <p></p>
+        </div>
+    </nav>
 
     <!-- Navigation -->
      <nav id="main-menu">
@@ -97,7 +109,7 @@
     <div class="page-title pb-0">
         <div class="container-fluid container-custom">
             <h1>독서모임</h1>
-            <p class="lead text-muted">Some of our works...</p>
+            <p class="lead text-muted">같이 읽어요^^</p>
         </div>
     </div>
     <%if current_user.is_admin?%>
@@ -138,26 +150,35 @@
                                     <h5 class="text-sm mb-0">팔로우 : <%= club.rolls.size%>명</h5>
                                 </a>
                             </div>
+                            <% if club.rolls.find_by(user_id: current_user.id)%>
+                                <% if club.rolls.find_by(user_id: current_user.id).relation=="captain"%>
+                                    <h5 class="text-sm mb-0">내 독서모임</h5>
+                                <% elsif club.rolls.find_by(user_id: current_user.id).relation=="follow"%>
+                                    <a href="/clubs/unfollow/<%= club.id%>" class="ml-20 btn btn-primary btn-sm animated">팔로우 해제</a>
+                                <%else%>
+                                    <a href="/clubs/follow/<%= club.id%>" class="ml-20 btn btn-primary btn-sm animated">팔로우</a>
+                                <%end%>
+                            <% else%>    
+                                <a href="/clubs/follow/<%= club.id%>" class="ml-20 btn btn-primary btn-sm animated">팔로우</a>
+                            <%end%>
                     </div>
-                    <% if club.rolls.find_by(user_id: current_user.id)%>
-                        <% if club.rolls.find_by(user_id: current_user.id).relation=="captain"%>
-                            <h5 class="text-sm mb-0">내 독서모임</h5>
-                        <% elsif club.rolls.find_by(user_id: current_user.id).relation=="follow"%>
-                            <a href="/clubs/unfollow/<%= club.id%>" class="ml-20 btn btn-primary btn-sm animated">팔로우 해제</a>
-                        <%else%>
-                            <a href="/clubs/follow/<%= club.id%>" class="ml-20 btn btn-primary btn-sm animated">팔로우</a>
-                        <%end%>
-                    <% else%>    
-                        <a href="/clubs/follow/<%= club.id%>" class="ml-20 btn btn-primary btn-sm animated">팔로우</a>
-                    <%end%>
+                    <div>
+                        <h1></h1>
+                    </div>
+                    
                 </div>
                 
                 <% end%>
+                
                 <% end%>
+                
             </div>
+            
+            
         </div>
         
     </section>
+    <%= paginate @clubs %>
 
 </div>
     

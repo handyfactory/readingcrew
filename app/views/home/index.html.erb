@@ -4,16 +4,28 @@
     <%unless user_signed_in?%>
     <a href="/" class="logo">
         <img src="<%= asset_path 'logo.png'%>" alt="">
+        
+        <a href="/users/sign_up" class="ml-20 btn btn-secondary btn-sm animated" >회원가입</a>
+        <a href="/users/sign_in" class="ml-20 btn btn-secondary btn-sm animated">로그인</a>
+        
     </a>
     <%else%>
-    <a href="/" class="owner">
-        <img width="80" height="80" src="<%= current_user.image%>" alt="" class="image">
-        <div class="content">
-            <h2 class="name"><%= current_user.name%></h2>
-            <h2 class="caption text-muted"><%= current_user.email%></h2>
-        </div>
-    </a>
+        <a href="/" class="owner">
+            <img width="80" height="80" src="<%= current_user.image%>" alt="" class="image">
+            <div class="content">
+                <h2 class="name"><%= current_user.name%></h2>
+                <h2 class="caption text-muted"><%= current_user.email%></h2>
+            </div>
+        </a>
+        
+            <a href="/users/sign_out" class="ml-20 btn btn-secondary btn-sm animated" data-method="delete">로그아웃</a>
+        
     <%end%>
+    <nav id="main">
+        <div class="nav-wrapper">
+            <p></p>
+        </div>
+    </nav>
 
     <!-- Navigation -->
     <nav id="main-menu">
@@ -85,7 +97,7 @@
                                 <li><a href="footer-widgetized.html">Footer Widgetized</a></li>
                             </ul>
                         </li>
-                        <li><a href="#">정보수정</a></li>
+                        <li><a href="/users/edit">정보수정</a></li>
                         
                     </ul>
                 </li>
@@ -135,8 +147,8 @@
                             <h2 class="display-3">R/Leading Crew</h2>
                             <p class="lead text-muted">혼독을 넘어 다른 누군가를 만나죠</p>
                             <div class="btn-group" data-local-scroll>
-                                <a href="about.html" class="btn btn-primary btn-lg">About us</a>
-                                <a href="services.html" class="btn btn-secondary btn-lg">Our services</a>
+                                <a href="/home/introduce" class="btn btn-primary btn-lg">About us</a>
+                                <a href="/home/services" class="btn btn-secondary btn-lg">Our services</a>
                             </div>
                         </div>
                     </div>
@@ -151,8 +163,8 @@
                             <h2 class="display-3">R/Leading Crew</h2>
                             <p class="lead text-muted">한 권의 독서가 3배 이상의 기쁨으로 돌아옵니다</p>
                             <div class="btn-group" data-local-scroll>
-                                <a href="about.html" class="btn btn-primary btn-lg">About us</a>
-                                <a href="services.html" class="btn btn-secondary btn-lg">Our services</a>
+                                <a href="/home/introduce" class="btn btn-primary btn-lg">About us</a>
+                                <a href="/home/services" class="btn btn-secondary btn-lg">Our services</a>
                             </div>
                         </div>
                     </div>

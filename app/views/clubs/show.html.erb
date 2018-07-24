@@ -4,16 +4,28 @@
     <%unless user_signed_in?%>
     <a href="/" class="logo">
         <img src="<%= asset_path 'logo.png'%>" alt="">
+        
+        <a href="/users/sign_up" class="ml-20 btn btn-secondary btn-sm animated" >회원가입</a>
+        <a href="/users/sign_in" class="ml-20 btn btn-secondary btn-sm animated" >로그인</a>
+        
     </a>
     <%else%>
-    <a href="/" class="owner">
-        <img width="80" height="80" src="<%= current_user.image%>" alt="" class="image">
-        <div class="content">
-            <h2 class="name"><%= current_user.name%></h2>
-            <h2 class="caption text-muted"><%= current_user.email%></h2>
-        </div>
-    </a>
+        <a href="/" class="owner">
+            <img width="80" height="80" src="<%= current_user.image%>" alt="" class="image">
+            <div class="content">
+                <h2 class="name"><%= current_user.name%></h2>
+                <h2 class="caption text-muted"><%= current_user.email%></h2>
+            </div>
+        </a>
+        
+            <a href="/users/sign_out" class="ml-20 btn btn-secondary btn-sm animated" data-method="delete">로그아웃</a>
+        
     <%end%>
+    <nav id="main">
+        <div class="nav-wrapper">
+            <p></p>
+        </div>
+    </nav>
 
     <!-- Navigation -->
      <nav id="main-menu">
@@ -142,7 +154,7 @@
                         </div>
                         <ul class="post-meta">
                             <li><i class="li-usb1"></i><%=cbook.category%></li>
-                            <li><i class="li-feedback"></i>리뷰 : <%= cbook.replies.size%>개</li>
+                            <li><i class="li-feedback"></i>리뷰 : <%= cbook.replies.size  + cbook.reply2s.size%>개</li>
                         </ul>
                         
                     </article>
@@ -165,35 +177,35 @@
                       <footer>
                           <img src="<%= user.image%>" alt="">
                           <span class="name"><%= user.name%><span class="text-muted">, <%= user.email%></span></span>
+                          
+                            
+                            
+                            <%if @club.rolls.find_by(user_id: current_user.id)%>
+                              <% if @club.rolls.find_by(user_id: current_user.id).relation=="captain"%>
+                                <%= "당신은 방장입니다"%>
+                              <% elsif @club.rolls.find_by(user_id: current_user.id).relation=="follow"%>
+                                <%= "팔로우 해주셔서 감사합니다^^"%>
+                              <%end%>
+                            <%else%>
+                              <% unless current_user.is_admin?%>
+                              <%= "팔로우 해주세요~"%>
+                              <%end%>
+                            <%end%>
                       </footer>
                   </blockquote>
                 </div>
             <%end%>
         <%end%>
-        
-        
-
-
+        <%if @club.rolls.find_by(user_id: current_user.id)%>
+             <% if @club.rolls.find_by(user_id: current_user.id).relation=="captain"%>
+                <%= link_to 'Edit', edit_club_path(@club) %>
+            <%end%>
+        <%end%>
+        <%= link_to 'Back', clubs_path %><br>
     </section>
 
 
-<p id="notice"><%= notice %></p>
-
-<%= link_to 'Edit', edit_club_path(@club) %> |
-<%= link_to 'Back', clubs_path %><br>
 
 
-<%if @club.rolls.find_by(user_id: current_user.id)%>
-  <% if @club.rolls.find_by(user_id: current_user.id).relation=="captain"%>
-    <%= "난 방장이다"%>
-  <%end%>
-<%else%>
-  <% unless current_user.is_admin?%>
-  <%= "팔로우해주세요"%>
-  <%end%>
-<%end%>
 
-<%if current_user.is_admin?%>
-관리자 : <%= User.find(@club.rolls.find_by(relation: "captain").user_id).email %>
-<%end%>
-</div>
+

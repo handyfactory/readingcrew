@@ -1,19 +1,31 @@
 <header id="header">
 
      <!-- Logo -->
-    <%unless user_signed_in?%>
+   <%unless user_signed_in?%>
     <a href="/" class="logo">
         <img src="<%= asset_path 'logo.png'%>" alt="">
+        
+        <a href="/users/sign_up" class="ml-20 btn btn-secondary btn-sm animated" >회원가입</a>
+        <a href="/users/sign_in" class="ml-20 btn btn-secondary btn-sm animated" >로그인</a>
+        
     </a>
     <%else%>
-    <a href="/" class="owner">
-        <img width="80" height="80" src="<%= current_user.image%>" alt="" class="image">
-        <div class="content">
-            <h2 class="name"><%= current_user.name%></h2>
-            <h2 class="caption text-muted"><%= current_user.email%></h2>
-        </div>
-    </a>
+        <a href="/" class="owner">
+            <img width="80" height="80" src="<%= current_user.image%>" alt="" class="image">
+            <div class="content">
+                <h2 class="name"><%= current_user.name%></h2>
+                <h2 class="caption text-muted"><%= current_user.email%></h2>
+            </div>
+        </a>
+        
+            <a href="/users/sign_out" class="ml-20 btn btn-secondary btn-sm animated" data-method="delete">로그아웃</a>
+        
     <%end%>
+    <nav id="main">
+        <div class="nav-wrapper">
+            <p></p>
+        </div>
+    </nav>
     <!-- Navigation -->
      <nav id="main-menu">
         <div class="nav-wrapper">

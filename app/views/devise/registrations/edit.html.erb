@@ -1,43 +1,236 @@
-<h2><%= t('.title', resource: resource_name.to_s.humanize) %></h2>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <%= devise_error_messages! %>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
+ <style>
+    .login-body {
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      background: #ffffff;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
 
-  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-    <div><%= t('.currently_waiting_confirmation_for_email', email: resource.unconfirmed_email) %></div>
-  <% end %>
+    .login-layout {
+        border-radius: 5px;
+        background: #ffffff;
+        width: 100%;
+        max-width: 330px;
+    }
+    
+    .form-signin {
+      height: 100%;
+      padding: 20px;
+      margin-bottom: 0px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-around;
+    }
+    
+    #inputPassword {
+      margin: 10px 0;  
+    }
+    
+</style>
 
-  <div class="field">
-    <%= f.label :password %> <i>(<%= t('.leave_blank_if_you_don_t_want_to_change_it') %>)</i><br />
-    <%= f.password_field :password, autocomplete: "off" %>
-    <% if @minimum_password_length %>
-      <br />
-      <em><%= t('devise.shared.minimum_password_length', count: @minimum_password_length) %></em>
-    <% end %>
-  </div>
+<header id="header">
 
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "off" %>
-  </div>
+     Logo 
+    <%unless user_signed_in?%>
+    <a href="/" class="logo">
+        <img src="<%= asset_path 'logo.png'%>" alt="">
+        
+        <a href="/users/sign_up" class="ml-20 btn btn-secondary btn-sm animated" >회원가입</a>
+        <a href="/users/sign_in" class="ml-20 btn btn-secondary btn-sm animated">로그인</a>
+        
+    </a>
+    <%else%>
+        <a href="/" class="owner">
+            <img width="80" height="80" src="<%= current_user.image%>" alt="" class="image">
+            <div class="content">
+                <h2 class="name"><%= current_user.name%></h2>
+                <h2 class="caption text-muted"><%= current_user.email%></h2>
+            </div>
+        </a>
+        
+            <a href="/users/sign_out" class="ml-20 btn btn-secondary btn-sm animated" data-method="delete">로그아웃</a>
+        
+    <%end%>
+    <nav id="main">
+        <div class="nav-wrapper">
+            <p></p>
+        </div>
+    </nav>
 
-  <div class="field">
-    <%= f.label :current_password %> <i>(<%= t('.we_need_your_current_password_to_confirm_your_changes') %>)</i><br />
-    <%= f.password_field :current_password, autocomplete: "off" %>
-  </div>
+     Navigation 
+    <nav id="main-menu">
+        <div class="nav-wrapper">
+            <ul class="nav nav-primary">
+                <li><a href="/" class="active"><i class="li-home"></i>Start</a></li>
+                <li><a href="/home/introduce"><i class="li-feedback"></i>About</a></li>
+                <li><a href="/home/services"><i class="li-laptop"></i>Services</a></li>
+                <li><a href="/clubs"><i class="li-imac"></i>독서모임</a></li>
+                <li><a href="/cbooks"><i class="li-pen"></i>선정도서</a></li>
+                <li><a href="/clubs/apply"><i class="li-email"></i>등록신청</a></li>
+                <li class="has-children">
+                    <a href="#"><i class="li-heart"></i>Mypage</a>
+                    <ul>
+                        <li><a href="#" class="go-back"><i class="ti-angle-left"></i>뒤로가기</a></li>
+                        <li class="has-children">
+                            <a href="/">내 서재</a>
+                            <ul>
+                                <li><a href="#" class="go-back"><i class="ti-angle-left"></i>뒤로가기</a></li>
+                                <li><a href="/home/p_read">읽은 책</a></li>
+                                <li><a href="/home/n_read">읽는 책</a></li>
+                                <li><a href="/home/f_read">읽을 책<span class="tag tag-info">New!</span></a></li>
+                                
+                            </ul>
+                        </li>
+                        <li class="has-children">
+                            <a href="/">내 독서모임</a>
+                            <ul>
+                                <li><a href="#" class="go-back"><i class="ti-angle-left"></i>뒤로가기</a></li>
+                                 <% if user_signed_in?%>
+                                    <% if current_user.rolls.find_by(relation: "captain")%>
+                                    
+                                    <li><a href="#">최근 팔로우</a></li>
+                                    <li><a href="#">최근 댓글</a></li>
+                                    <li><a href="/home/calendar">일정</a></li>
+                                <%end%>
+                                <%end%>
+                            </ul>
+                        </li>
+                        <li class="has-children">
+                            <a href="/">팔로잉한 독서모임</a>
+                            <ul>
+                                <li><a href="#" class="go-back"><i class="ti-angle-left"></i>뒤로가기</a></li>
+                                <% if user_signed_in?%>
+                                <% if current_user.clubs%>
+                                <% current_user.clubs.each do |club|%>
+                                    <li><a href="/clubs/<%= club.id%>"><%= club.title%></a></li>
+                                <% end%>
+                                <% end%>
+                                <%end%>
+                            </ul>
+                        </li>
+                        <li class="has-children">
+                            <a href="#">내가 남긴 기록들</a>
+                            <ul>
+                                <li><a href="#" class="go-back"><i class="ti-angle-left"></i>Extra</a></li>
+                                <li><a href="portfolio-2-cols.html">Portfolio 2 Columns</a></li>
+                                <li><a href="portfolio-3-cols.html">Portfolio 3 Columns</a></li>
+                                <li><a href="portfolio-project-1.html">Single Project #1</a></li>
+                                <li><a href="portfolio-project-2.html">Single Project #2</a></li>
+                            </ul>
+                        </li>
+                        <li class="has-children">
+                            <a href="#">친구 목록</a>
+                            <ul>
+                                <li><a href="#" class="go-back"><i class="ti-angle-left"></i>Extra</a></li>
+                                <li><a href="footer-light.html">Footer Light</a></li>
+                                <li><a href="footer-dark.html">Footer Dark</a></li>
+                                <li><a href="footer-widgetized.html">Footer Widgetized</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#">정보수정</a></li>
+                        
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <span class="selector"></span>
+    </nav>
 
-  <div class="actions">
-    <%= f.submit t('.update') %>
-  </div>
-<% end %>
+</header>
+<section id="contact" class="section">
 
-<h3><%= t('.cancel_my_account') %></h3>
+    <div class="container-fluid container-custom">
+        <div class="row">
+            <div class="col-md-7 offset-md-3">
+                <div class="row">
+                  <div class="col-md-6 offset-md-4">
+                        <div class="login-layout">
+                            <h2><%= t('.title', resource: resource_name.to_s.humanize) %></h2>
+                              
+                              <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html:{method: :put, class:"form-signin", multipart: true }) do |f| %>
+                                  <% if current_user.image%>
+                                 <div id="image_preview" class="mb-4" style="background-image: url('<%= current_user.image%>');background-size: 72px 72px;width: 72px;height: 72px;"></div>
+                                 <%end%>
+                                  <p class="font-weight-normal">프로필사진을 등록하세요</p>
+                                 
+                                <div class="field form-control">
+                                  <%= f.file_field(:image, id:"image_upload") %>
+                                </div>
+                                 
+                                <div class="field">
+                                  <%= f.label :email %><br />
+                                  <%= f.email_field :email, autofocus: true, autocomplete: "email" %><br />
+                                    <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+                                    <div><%= t('.currently_waiting_confirmation_for_email', email: resource.unconfirmed_email) %></div><br />
+                                    <% end %>
+                                  <%= f.label :password %> <i>(<%= "패스워드 변경 시 입력" %>)</i><br />
+                                  <%= f.password_field :password, autocomplete: "off" %>
+                                  <% if @minimum_password_length %>
+                                    <br />
+                                    <em><%= t('devise.shared.minimum_password_length', count: @minimum_password_length) %></em><br />
+                                  <% end %>
+                                      <%= f.label :password_confirmation %><br />
+                                      <%= f.password_field :password_confirmation, autocomplete: "off" %><br />
+                                      
+                                  <%= f.label :name %><br />
+                                  <%= f.text_field :name, autofocus: true, autocomplete: "off" %><br />
+                                  <%= f.label :current_password %><br /> 
+                                      <i>(<%= "변경하려면 PW를 입력하세요 " %>)</i><br />
+                                      <%= f.password_field :current_password, autocomplete: "off" %><br />
+                                </div>
+                                <div class="field form-control">
+                                  <p></p>
+                                </div>
 
-<p><%= t('.unhappy') %> <%= button_to t('.cancel_my_account'), registration_path(resource_name), data: { confirm: t('.are_you_sure') }, method: :delete %></p>
+                                   <button class="btn btn-lg btn-primary btn-block actions" type="submit"><%= t('.update')%></button>
+                                
+                            <% end %>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col"></div>
+                                    <div class="col">
+                                        <%= render "devise/shared/links" %>            
+                                    </div>
+                                    <div class="col"></div>
+                                </div>
+                            </div>
+                            <%= link_to t('devise.shared.links.back'), :back %>
+                        </div>
+                         
+                      </div>
+                      
+                </div>
+            </div>
+            
+        </div>
+    </div>
 
-<%= link_to t('devise.shared.links.back'), :back %>
+</section>
+
+<script>
+document.addEventListener("DOMContentLoaded", function(e){ 
+  var input = document.getElementById("image_upload");
+  if(input){
+    input.addEventListener("change", function(e){
+      set_image_to_preview(this);
+    });
+
+    var set_image_to_preview = function(input){
+      if(input.files && input.files[0]){
+        reader = new FileReader();
+        reader.addEventListener("load", function(e){
+          preview = document.getElementById("image_preview");
+          preview.style.backgroundImage = `url('${e.target.result}')`;
+        });
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+  }
+})
+</script>

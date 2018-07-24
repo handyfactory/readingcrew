@@ -15,20 +15,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <link href="https://fonts.googleapis.com/css?family=Poppins:600,700" rel="stylesheet">
   
+  
 </head>
 
-<body class="header-vertical">
+<body class="<%= @loginCss %> header-vertical">
 
-    
-    
-    <% unless user_signed_in?%>
-    <%= link_to "회원가입", new_user_registration_path %>
-    <%= link_to "로그인", new_user_session_path%>
-    <% else%>
-    <%= link_to "로그아웃", destroy_user_session_path, method: :delete%>
-    <% end%>
-  
-  
   <%= yield %>
   
   <div id="mobile-nav-toggle"><span></span><span></span><span></span></div>
@@ -38,6 +29,7 @@
   <script src="//cdn.rawgit.com/mahnunchik/markerclustererplus/master/dist/markerclusterer.min.js"></script>  
   <script src='//cdn.rawgit.com/printercu/google-maps-utility-library-v3-read-only/master/infobox/src/infobox_packed.js' type='text/javascript'></script>
   <script src='//underscorejs.org/underscore-min.js' type='text/javascript'></script>
+
   
   <%= javascript_include_tag 'footer' %>
   

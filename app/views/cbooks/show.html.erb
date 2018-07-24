@@ -4,16 +4,28 @@
     <%unless user_signed_in?%>
     <a href="/" class="logo">
         <img src="<%= asset_path 'logo.png'%>" alt="">
+        
+        <a href="/users/sign_up" class="ml-20 btn btn-secondary btn-sm animated" >회원가입</a>
+        <a href="/users/sign_in" class="ml-20 btn btn-secondary btn-sm animated" >로그인</a>
+        
     </a>
     <%else%>
-    <a href="/" class="owner">
-        <img width="80" height="80" src="<%= current_user.image%>" alt="" class="image">
-        <div class="content">
-            <h2 class="name"><%= current_user.name%></h2>
-            <h2 class="caption text-muted"><%= current_user.email%></h2>
-        </div>
-    </a>
+        <a href="/" class="owner">
+            <img width="80" height="80" src="<%= current_user.image%>" alt="" class="image">
+            <div class="content">
+                <h2 class="name"><%= current_user.name%></h2>
+                <h2 class="caption text-muted"><%= current_user.email%></h2>
+            </div>
+        </a>
+        
+            <a href="/users/sign_out" class="ml-20 btn btn-secondary btn-sm animated" data-method="delete">로그아웃</a>
+        
     <%end%>
+    <nav id="main">
+        <div class="nav-wrapper">
+            <p></p>
+        </div>
+    </nav>
 
     <!-- Navigation -->
      <nav id="main-menu">
@@ -126,7 +138,7 @@
                     <h4 class="post-title"><%= @cbook.title%></h4>
                     <ul class="post-meta">
                         <li><i class="li-usb1"></i><%= @cbook.category%></li>
-                        <li><i class="li-feedback"></i>리뷰 : <%= @cbook.replies.size%>개</li>
+                        <li><i class="li-feedback"></i>리뷰 : <%= @cbook.replies.size + @cbook.reply2s.size%>개</li>
                     </ul>
                     <div class="post-image"><img height="100" width ="100" src="<%= @cbook.image%>" alt=""></div>
                     <div class="post-content">
@@ -134,13 +146,14 @@
                         <p></p>
                         <!-- Blockquote -->
                         <blockquote class="blockquote animated" data-animation="fadeInLeft">
-                            <p><%= "이번주 선정도서입니다^^"%></p>
+                            
                             <footer>
                                
                                     <div class="avatar"><img src="<%= User.find(@cbook.club.rolls.find_by(relation: "captain").user_id).image%>" alt=""></div>
                                     <div class="content">
+                                        
                                         <span class="details"><%= User.find(@cbook.club.rolls.find_by(relation: "captain").user_id).name%><span class="text-muted"><%= User.find(@cbook.club.rolls.find_by(relation: "captain").user_id).email%></span></span>
-                                        <p></p>
+                                        
                                     </div>
                                 
                                 <!--<img src="" alt="">-->
@@ -149,7 +162,7 @@
                         </blockquote>
                     </div>
                     <div class="post-comments post-module">
-                        <h4>Comments</h4>
+                        <h4>리뷰</h4>
                         <div class="content">
                             <ul class="comments">
                                 
@@ -157,8 +170,15 @@
                                     <li>
                                         <div class="avatar"><img src="<%= reply.user.image%>" alt=""></div>
                                         <div class="content">
-                                            <span class="details"><%= reply.user.name%> on <%= reply.created_at.strftime("%m %d, %Y")%>,  <a href="/cbooks/reply2/<%= reply.id%>" class="text-primary">Reply</a></span>
-                                            <p><%= reply.comment%></p>
+                                            <span class="details"><%= reply.user.name%> on <%= reply.created_at.strftime("%m %d, %Y")%>,  <a href="/reply2s/<%= reply.id%>/edit" class="text-primary">Reply</a></span>
+                                            <p>
+                                                <%= reply.comment%>
+                                                <%if reply.user.id == current_user.id%>
+                                                    
+                                                    <a href="/replys/<%= reply.id%>" class="text-primary" data-method="delete">삭제</a>
+                                                <%end%>
+                                            </p>
+                                            
                                         </div>
                                         
                                         <% if reply.reply2s%>    
@@ -167,8 +187,17 @@
                                                 <li>
                                                 <div class="avatar"><img src="<%= reply2.user.image%>" alt=""></div>
                                                 <div class="content">
-                                                    <span class="details"><%= reply2.user.name%> on <%= reply2.created_at.strftime("%m %d, %Y")%>, <a href="/cbooks/reply2/<%= reply.id%>" class="text-primary" >Reply</a></span>
-                                                    <p><%= reply2.comment%></p>
+                                                    <span class="details"><%= reply2.user.name%> on <%= reply2.created_at.strftime("%m %d, %Y")%>, <a href="/reply2s/<%= reply.id%>/edit" class="text-primary" >Reply</a></span>
+                                                    <p>
+                                                        
+                                                        <%= reply2.comment%>
+                                                        <%if reply2.user.id == current_user.id%>
+                                                            
+                                                            <a href="/reply2s/<%= reply2.id%>" class="text-primary" data-method="delete">삭제</a>
+                                                        <%end%>
+                                                         
+                                                    </p>
+                                                    
                                                 </div>
                                                 </li>
                                             <% end%>
@@ -179,10 +208,11 @@
                                             <% reply.update(reply2: false)%>
                                                 <ul>
                                                     <div class="content">
-                                                        <form action="/cbooks/reply2_register/<%= reply.id%>" id="add-comment" class="validate-form" method= "post">
+                                                        <form action="/reply2s" id="add-comment" class="validate-form" method= "post">
                                                             <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token%>">
                                                             <input type="hidden" name = "user_id" value="<%= current_user.id%>" />
-                                                            
+                                                            <input type="hidden" name = "cbook_id" value="<%= @cbook.id%>" />
+                                                            <input type="hidden" name = "id" value="<%= reply.id%>" />
                                                             <div class="form-group">
                                                                 <textarea name="comment" id="comment" cols="30" rows="4" class="form-control" placeholder="Comment" required></textarea>
                                                             </div>
@@ -201,10 +231,10 @@
                         <div class="post-add-comment post-module">
                         <h4>리뷰 남기기</h4>
                         <div class="content">
-                            <form action="/cbooks/reply/<%=@cbook.id%>" id="add-comment" class="validate-form" method= "post">
+                            <form action="/replys" id="add-comment" class="validate-form" method= "post">
                                 <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token%>">
                                 <input type="hidden" name = "user_id" value="<%= current_user.id%>" />
-                                
+                                <input type="hidden" name = "id" value="<%=@cbook.id%>" />
                                 <div class="form-group">
                                     <textarea name="comment" id="comment" cols="30" rows="4" class="form-control" placeholder="Comment" required></textarea>
                                 </div>

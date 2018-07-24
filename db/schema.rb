@@ -63,6 +63,7 @@ ActiveRecord::Schema.define(version: 20180722140629) do
     t.string   "comment"
     t.integer  "reply_id"
     t.integer  "user_id"
+    t.integer  "cbook_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

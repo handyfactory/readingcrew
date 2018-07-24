@@ -4,6 +4,7 @@ class CreateReply2s < ActiveRecord::Migration
       t.string :comment
       t.integer :reply_id
       t.integer :user_id
+      t.integer :cbook_id
 
       t.timestamps null: false
     end

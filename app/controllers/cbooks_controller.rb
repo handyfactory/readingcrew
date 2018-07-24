@@ -2,7 +2,20 @@ class CbooksController < ApplicationController
   before_action :authenticate_user!
   
   def index
-    @cbooks = Cbook.all
+    @cbooks = Cbook.order(register_at: :desc).page(params[:page]).per(2)
+    @total = []
+    reply = Reply.all
+    reply2 = Reply2.all
+    
+    reply.each do |r|
+      @total.push(r)
+    end
+    reply2.each do |r2|
+      @total.push(r2)
+    end
+    
+    
+    
   end
 
   def new
@@ -117,7 +130,8 @@ class CbooksController < ApplicationController
     Reply2.create(
       comment: params[:comment],
       reply_id: params[:id],
-      user_id: params[:user_id]
+      user_id: params[:user_id],
+      cbook_id: params[:cbook_id]
       )
     
     redirect_to :back

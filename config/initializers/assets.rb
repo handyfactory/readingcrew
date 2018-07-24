@@ -9,6 +9,7 @@ Rails.application.config.assets.version = '1.0'
 # Precompile additional assets.
 # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
 Rails.application.config.assets.precompile += %w(home.js home.scss clubs.js clubs.scss 
-                                                cbooks.js cbooks.scss admin.js admin.scss)
+                                                cbooks.js cbooks.scss admin.js admin.scss 
+                                                replys.js replys.scss reply2s.js reply2s.scss)
 
 Rails.application.config.assets.precompile += %w(footer.js)

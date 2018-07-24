@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  
+
   get 'admin/clubs'
   get 'admin/cbooks'
   get 'admin/users'
@@ -24,7 +26,10 @@ Rails.application.routes.draw do
   
   resources :cbooks
   resources :clubs
-  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
+  resources :replys
+  resources :reply2s
+  
+  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks', registrations: 'users/registrations' }
   root 'home#index'
   
   
