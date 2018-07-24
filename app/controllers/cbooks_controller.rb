@@ -2,8 +2,12 @@ class CbooksController < ApplicationController
   before_action :authenticate_user!
   
   def index
-    @cbooks = Cbook.order(register_at: :desc).page(params[:page]).per(2)
+    @cbooks = Cbook.where(club_id: current_user.clubs.ids).order(register_at: :desc).page(params[:page]).per(4)
+    # @cbooks = Cbook.order(register_at: :desc).page(params[:page]).per(4)
+    @cbook_total = Cbook.all
+    
     @total = []
+    
     reply = Reply.all
     reply2 = Reply2.all
     

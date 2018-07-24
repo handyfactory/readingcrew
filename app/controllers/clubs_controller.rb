@@ -17,7 +17,25 @@ class ClubsController < ApplicationController
   end
   
   def cbooks
-    @cbooks = @club.cbooks.page(params[:page]).per(4)
+    @cbooks = @club.cbooks.order(register_at: :desc).page(params[:page]).per(4)
+    @club_cbooks = Club.find(params[:id]).cbooks
+    
+    reply=[]
+    reply2=[]
+    
+    @club_cbooks.each do |cbook|
+      reply = cbook.replies
+      reply2 = cbook.reply2s
+    end
+
+    @total = []
+    
+    reply.each do |r|
+      @total.push(r)
+    end
+    reply2.each do |r2|
+      @total.push(r2)
+    end
     
   end
 

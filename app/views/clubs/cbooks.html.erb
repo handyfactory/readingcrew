@@ -153,54 +153,63 @@
                 
             </div>
             
+            
             <!-- Sidebar -->
             <div class="sidebar right">
                 <!-- Widget - Recent posts -->
+                
                 <div class="widget widget-recent-posts">
-                    <h6 class="text-muted">Recent Posts</h6>
+                    <h6 class="text-muted">최근 선정도서</h6>
                     <ul class="list-posts">
-                        <li>
-                            <a href="blog-post-sidebar-right.html">Crazy developer ideas on 2016</a>
-                            <span class="date">February 14, 2015</span>
-                        </li>
-                        <li>
-                            <a href="blog-post-sidebar-right.html">Our road trip to London!</a>
-                            <span class="date">February 14, 2015</span>
-                        </li>
-                        <li>
-                            <a href="blog-post-sidebar-right.html">New iOS design concept</a>
-                            <span class="date">February 14, 2015</span>
-                        </li>
+                        <% count=0%>
+                        <% @club_cbooks.sort_by{|x| x.register_at}.reverse.each do |cbook|%>
+                           
+                                <%count += 1%>
+                                    <li>
+                                        <a href="/cbooks/<%= cbook.id%>"><img src="<%= cbook.image%>" height = "40" width = "40"></a>
+                                        <span><%= cbook.title%></span><br>
+                                        <span class="date"><%= cbook.register_at.strftime("%m %d, %Y")%></span>
+                                    </li>
+                                    <% if count == 3%>
+                                        <% break%>
+                                    <%end%>
+                            
+                        <% end%>
                     </ul>
                 </div>
                 <!-- Widget - Twitter -->
                 <div class="widget widget-twitter">
-                    <h6 class="text-muted">Latest Tweets</h6>
-                    <div class="twitter-feed" data-count="2"></div>
-                </div>
-                <!-- Widget - Newsletter -->
-                <div class="widget widget-newsletter">
-                    <h6 class="text-muted">Subscribe Us</h6>
-                    <form action="//suelo.us12.list-manage.com/subscribe/post-json?u=ed47dbfe167d906f2bc46a01b&amp;id=24ac8a22ad" id="sign-up-form" class="sign-up-form validate-form" method="POST"
-                        data-message-error="Opps... Something went wrong - please try again later"
-                        data-message-success="Yeah! You will recieve a confirmation email soon..."
-                    >
-                        <div class="form-group">
-                            <input type="email"  name="EMAIL" id="mce-EMAIL" value="" class="form-control" placeholder="Your e-mail..." required>
-                        </div>
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-submit">
-                                <span>Subscribe!</span>
-                                <svg class="loader loader-white" width="32px" height="32px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><circle class="circle" fill="none" stroke-width="2" stroke-linecap="round" cx="16" cy="16" r="14"></circle></svg>
-                            </button>
-                        </div>
-                    </form>
-                </div>
-                <!-- Widget - Instagram -->
-                <div class="widget widget-instagram">
-                    <h6 class="text-muted">Instagram Feed</h6>
-                    <div id="instagram-feed" class="instagram-grid clearfix" data-limit="6"></div>
-                </div>
+                    <h6 class="text-muted">최근 리뷰</h6>
+                    <% count = 0%>
+                    <% @total.sort_by{|x| x.created_at}.reverse.each do |reply|%>
+                     
+                    <% count += 1%>
+                    
+                    <div>
+                         <ul class="comments">
+                            <li>
+                                <div class="avatar"><img src="<%= reply.user.image%>" alt=""></div>
+                                <div class="content">
+                                    <span class="details"><%= reply.user.name%></span><br>
+                                    <span class="details">on <%= reply.created_at.strftime("%m %d, %Y")%></span>
+                                    <p>
+                                        <%= reply.comment%>
+                                    </p>
+                                    
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <% if count == 3%>
+                        <% break%>
+                    <%end%>
+                  
+                    
+                <%end%>
+            </div>
+   
+           
+               
             </div>
         </div>
         

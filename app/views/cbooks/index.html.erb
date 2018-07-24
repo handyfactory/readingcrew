@@ -120,8 +120,9 @@
                 <div class="row masonry">  
                     <div class="masonry-sizer col-sm-6 col-xs-12"></div>
                     <% if current_user.clubs.first%>
-                    <% @cbooks.sort_by{|x| x.register_at}.reverse.each do |cbook|%>
-                        <% if cbook.club.rolls.find_by(user_id: current_user.id)%>
+                    <% @cbooks.each do |cbook| %>
+                    <%# @cbook_total.sort_by{|x| x.register_at}.reverse.each do |cbook|%>
+                        <%# if cbook.club.rolls.find_by(user_id: current_user.id)%>
                             <div class="masonry-item col-sm-6 col-xs-12">
                                 <!-- Post - Item -->
                                 <article class="post item">
@@ -144,7 +145,7 @@
                                     </ul>
                                 </article>
                             </div>
-                        <% end%>
+                        <%# end%>
                     <% end%>
                     <% else%>
                          <div class="masonry-item col-sm-6 col-xs-12">
@@ -163,14 +164,9 @@
                                                 </button>
                                             </a>
                                         </p>
-                                        
                                     </ul>
-                                    
-                                    
-                                  
                                 </article>
                         </div>
-                        
                     <% end%>
                     
                 </div>
@@ -180,6 +176,7 @@
                 
             </div>
             
+            <% if current_user.clubs.first%>
             <!-- Sidebar -->
             <div class="sidebar right">
                 <!-- Widget - Recent posts -->
@@ -187,17 +184,20 @@
                     <h6 class="text-muted">최근 선정도서</h6>
                     <ul class="list-posts">
                         <% count=0%>
-                        <% @cbooks.sort_by{|x| x.register_at}.reverse.each do |cbook|%>
-                        <%count += 1%>
-                        
-                        <li>
-                            <a href="/cbooks/<%= cbook.id%>"><img src="<%= cbook.image%>" height = "40" width = "40"></a>
-                            <span><%= cbook.title%></span><br>
-                            <span class="date"><%= cbook.register_at.strftime("%m %d, %Y")%></span>
-                        </li>
-                        <% if count == 3%>
-                            <% break%>
-                        <%end%>
+                        <% @cbook_total.sort_by{|x| x.register_at}.reverse.each do |cbook|%>
+                            <% if cbook.club.rolls.find_by(user_id: current_user.id)%>
+                                <%if cbook.club.rolls.find_by(user_id: current_user.id).relation=="follow" || cbook.rolls.find_by(user_id: current_user.id).relation=="captain"%>
+                                <%count += 1%>
+                                    <li>
+                                        <a href="/cbooks/<%= cbook.id%>"><img src="<%= cbook.image%>" height = "40" width = "40"></a>
+                                        <span><%= cbook.title%></span><br>
+                                        <span class="date"><%= cbook.register_at.strftime("%m %d, %Y")%></span>
+                                    </li>
+                                    <% if count == 3%>
+                                        <% break%>
+                                    <%end%>
+                                <%end%>
+                            <% end%>
                         <% end%>
                     </ul>
                 </div>
@@ -206,6 +206,8 @@
                     <h6 class="text-muted">최근 리뷰</h6>
                     <% count = 0%>
                     <% @total.sort_by{|x| x.created_at}.reverse.each do |reply|%>
+                      <% if reply.cbook.club.rolls.find_by(user_id: current_user.id)%>
+                      <%if reply.cbook.club.rolls.find_by(user_id: current_user.id).relation=="follow" || reply.cbook.club.rolls.find_by(user_id: current_user.id).relation=="captain"%>
                     <% count += 1%>
                     
                     <div>
@@ -226,8 +228,13 @@
                     <% if count == 3%>
                         <% break%>
                     <%end%>
-                    <%end%>
-                </div>
+                   <%end%>
+                <% end%>
+                    
+                <%end%>
+            </div>
+   
+            <% end%>
                
             </div>
         </div>
